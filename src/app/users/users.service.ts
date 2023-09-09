@@ -8,6 +8,15 @@ import { UpdateUserDto } from './dtos/update-user-dto';
 export class UsersService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
 
+  async findOneById(id: number) {
+    const user = await this.repo.findOne({
+      where: { id },
+      relations: { roles: true },
+    });
+
+    return user;
+  }
+
   findOneByEmail(email: string) {
     return this.repo.findOneBy({ email });
   }
