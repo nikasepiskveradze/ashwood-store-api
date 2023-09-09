@@ -19,8 +19,14 @@ export class UsersService {
     return this.repo.findOneBy({ email });
   }
 
-  createUser({ name, email, password, birthday }) {
-    const user = this.repo.create({ name, email, password, birthday });
+  createUser({ name, lastname, email, password, birthday }) {
+    const user = this.repo.create({
+      name,
+      lastname,
+      email,
+      password,
+      birthday,
+    });
     return this.repo.save(user);
   }
 }
