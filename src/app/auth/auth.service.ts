@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { SignupUserDto } from './dtos/signup-user.dto';
 import { randomBytes, scrypt } from 'crypto';
@@ -33,8 +37,33 @@ export class AuthService {
 
     const payload = {
       sub: createdUser.id,
+      id: createdUser.id,
       name: createdUser.name,
       email: createdUser.email,
+    };
+
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
+  }
+
+  async signin(email: string, password: string) {
+    const user = await this.usersService.findOneByEmail(email);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const [salt, storedHash] = user.password.split('.');
+    const hash = (await promisify(scrypt)(password, salt, 32)) as Buffer;
+    if (storedHash !== hash.toString('hex')) {
+      throw new BadRequestException('Bad password');
+    }
+
+    const payload = {
+      sub: user.id,
+      id: user.id,
+      name: user.name,
+      email: user.email,
     };
 
     return {

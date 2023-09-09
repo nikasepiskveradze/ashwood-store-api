@@ -11,6 +11,10 @@ export class UsersService {
     console.log('find one user');
   }
 
+  findOneById(id: number) {
+    return this.repo.findOneBy({ id });
+  }
+
   findOneByEmail(email: string) {
     return this.repo.findOneBy({ email });
   }
