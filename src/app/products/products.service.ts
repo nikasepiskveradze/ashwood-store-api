@@ -9,6 +9,17 @@ import { Category } from '../categories/category.entity';
 export class ProductsService {
   constructor(@InjectRepository(Product) private repo: Repository<Product>) {}
 
+  findAll() {
+    return this.repo.find({ relations: { categories: true } });
+  }
+
+  findOne(id: number) {
+    return this.repo.findOne({
+      where: { id },
+      relations: { categories: true },
+    });
+  }
+
   create(productDto: CreateProductDto, image: Express.Multer.File) {
     const product = this.repo.create({
       title: productDto.title,
