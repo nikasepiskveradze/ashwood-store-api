@@ -7,6 +7,7 @@ import { APP_PIPE } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
 import typeorm from '../config/typeorm';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import typeorm from '../config/typeorm';
     UsersModule,
     AuthModule,
     RolesModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [
