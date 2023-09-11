@@ -9,6 +9,7 @@ import { RolesModule } from './roles/roles.module';
 import typeorm from '../config/typeorm';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ProductsModule } from './products/products.module';
     RolesModule,
     CategoriesModule,
     ProductsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [
