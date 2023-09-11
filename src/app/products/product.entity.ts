@@ -30,7 +30,7 @@ export class Product {
   @Column()
   image: string;
 
-  @ManyToMany(() => Category, { cascade: true })
+  @ManyToMany(() => Category)
   @JoinTable()
   categories: Category[];
 }

@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './product.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { Category } from '../categories/category.entity';
+import { UpdateProductDto } from './dtos/update-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -36,5 +37,38 @@ export class ProductsService {
     product.image = image.path;
 
     return this.repo.save(product);
+  }
+
+  async update(
+    productId: string,
+    productDto: UpdateProductDto,
+    image: Express.Multer.File,
+  ) {
+    const product = await this.repo.findOne({
+      where: { id: parseInt(productId) },
+      relations: { categories: true },
+    });
+    if (!product) {
+      throw new NotFoundException('Product not found, can not update');
+    }
+
+    Object.assign(product, productDto);
+    product.price = parseFloat(productDto.price);
+    product.quantity = parseFloat(productDto.quantity);
+    product.categories = productDto.categories.map((id) => ({
+      id: parseInt(id),
+    })) as Category[];
+    product.image = image.path;
+
+    return this.repo.save(product);
+  }
+
+  async delete(productId: string) {
+    const product = await this.repo.findOneBy({ id: parseInt(productId) });
+    if (!product) {
+      throw new NotFoundException('Product not found, can not delete');
+    }
+
+    await this.repo.delete(product);
   }
 }
