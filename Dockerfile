@@ -1,5 +1,5 @@
 FROM node:current-alpine3.18
-WORKDIR /app
+WORKDIR /ashwood-store
 COPY package*.json ./
 RUN npm install
 COPY . .

@@ -8,6 +8,7 @@ import { SignupUserDto } from './dtos/signup-user.dto';
 import { randomBytes, scrypt } from 'crypto';
 import { promisify } from 'util';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -35,16 +36,7 @@ export class AuthService {
       password: result,
     });
 
-    const payload = {
-      sub: createdUser.id,
-      id: createdUser.id,
-      name: createdUser.name,
-      email: createdUser.email,
-    };
-
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
+    return this.getAccessToken(createdUser);
   }
 
   async signin(email: string, password: string) {
@@ -59,11 +51,13 @@ export class AuthService {
       throw new BadRequestException('Bad password');
     }
 
+    return this.getAccessToken(user);
+  }
+
+  private async getAccessToken(user: User) {
     const payload = {
       sub: user.id,
-      id: user.id,
       name: user.name,
-      email: user.email,
     };
 
     return {
