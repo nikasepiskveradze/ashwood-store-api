@@ -16,10 +16,11 @@ services:
     build: .
     ports:
       - 3000:3000
+    command: npm run startup
     depends_on:
       - db
     volumes:
-      - ./:/app
+      - ./:/ashwood-store
     env_file:
       - ./.env
 volumes:
