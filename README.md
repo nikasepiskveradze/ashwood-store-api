@@ -46,3 +46,6 @@ $ docker-compose up
 ```bash
 $ docker-compose down
 ```
+
+## API Documentation
+In order to see documentation, go to route: ```http://localhost:3000/api/```

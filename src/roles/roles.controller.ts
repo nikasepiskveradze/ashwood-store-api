@@ -8,7 +8,9 @@ import { UserDto } from '../users/dtos/user.dto';
 import { Roles } from '../../decorators/roles.decoractor';
 import { Role } from '../../enums/role.enum';
 import { RolesGuard } from '../../guards/roles.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Roles')
 @UseGuards(AuthGuard, RolesGuard)
 @Controller('roles')
 export class RolesController {

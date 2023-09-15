@@ -6,7 +6,9 @@ import { CurrentUser } from '../../decorators/current-user.decorator';
 import { User } from '../users/user.entity';
 import { Serialize } from '../../interceptors/serialize.interceptor';
 import { CommentDto } from './dtos/comment.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Comments')
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}

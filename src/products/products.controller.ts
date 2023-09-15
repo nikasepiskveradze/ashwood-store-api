@@ -17,7 +17,9 @@ import { Serialize } from '../../interceptors/serialize.interceptor';
 import { ProductDto } from './dtos/product.dto';
 import { AuthGuard } from '../../guards/auth.guard';
 import { UpdateProductDto } from './dtos/update-product.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}

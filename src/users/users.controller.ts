@@ -6,7 +6,9 @@ import { User } from './user.entity';
 import { Serialize } from '../../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { UpdateUserDto } from './dtos/update-user-dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Serialize(UserDto)
 @Controller('users')
 export class UsersController {
