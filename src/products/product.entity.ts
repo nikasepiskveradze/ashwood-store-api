@@ -3,9 +3,11 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Category } from '../categories/category.entity';
+import { Favorite } from '../favorites/favorite.entity';
 
 @Entity()
 export class Product {
@@ -33,4 +35,7 @@ export class Product {
   @ManyToMany(() => Category)
   @JoinTable()
   categories: Category[];
+
+  @OneToMany(() => Favorite, (favorite) => favorite.product)
+  favoritedBy: Favorite[];
 }

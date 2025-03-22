@@ -10,6 +10,7 @@ import typeorm from '../config/typeorm';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
 import { CommentsModule } from './comments/comments.module';
+import { FavoritesModule } from './favorites/favorites.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { CommentsModule } from './comments/comments.module';
     CategoriesModule,
     ProductsModule,
     CommentsModule,
+    FavoritesModule,
   ],
   controllers: [AppController],
   providers: [
