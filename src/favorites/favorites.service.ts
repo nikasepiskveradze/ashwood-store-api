@@ -1,9 +1,10 @@
-import { ForbiddenException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users/user.entity';
 import { Repository } from 'typeorm';
 import { Favorite } from './favorite.entity';
 import { Product } from '../products/product.entity';
+import { PaginationDto } from '../../dtos/pagination.dto';
 
 @Injectable()
 export class FavoritesService {
@@ -14,11 +15,23 @@ export class FavoritesService {
     private favoriteRepository: Repository<Favorite>,
   ) {}
 
-  findAll(userId: number) {
-    return this.favoriteRepository.find({
+  async findAll(userId: number, query: PaginationDto) {
+    const { limit = 10, page = 1 } = query;
+
+    const [data, total] = await this.favoriteRepository.findAndCount({
       where: { user: { id: userId } },
       relations: ['product'],
+      order: { id: 'asc' },
+      skip: (page - 1) * limit,
+      take: limit,
     });
+
+    return {
+      data,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+      total,
+    };
   }
 
   async addOrRemoveFavorites({

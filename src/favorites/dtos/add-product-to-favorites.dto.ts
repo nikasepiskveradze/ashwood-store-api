@@ -1,6 +1,6 @@
 import { IsNumber } from 'class-validator';
 
-export class AddProductToFavorites {
+export class AddProductToFavoritesDto {
   @IsNumber()
   productId: number;
 }
