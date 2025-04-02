@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Category } from '../categories/category.entity';
 import { Favorite } from '../favorites/favorite.entity';
+import { Cart } from '../cart/cart.entity';
 
 @Entity()
 export class Product {
@@ -38,4 +39,7 @@ export class Product {
 
   @OneToMany(() => Favorite, (favorite) => favorite.product)
   favoritedBy: Favorite[];
+
+  @OneToMany(() => Cart, (cart) => cart.product)
+  cartedBy: Cart[];
 }
