@@ -26,4 +26,25 @@ export class CartController {
       productId: body.productId,
     });
   }
+
+  @Post('add-quantity')
+  @UseGuards(AuthGuard)
+  addQuantity(@CurrentUser() user: User, @Body() body: { productId: number }) {
+    return this.cartService.addQuantity({
+      userId: user.id,
+      productId: body.productId,
+    });
+  }
+
+  @Post('remove-quantity')
+  @UseGuards(AuthGuard)
+  removeQuantity(
+    @CurrentUser() user: User,
+    @Body() body: { productId: number },
+  ) {
+    return this.cartService.removeQuantity({
+      userId: user.id,
+      productId: body.productId,
+    });
+  }
 }

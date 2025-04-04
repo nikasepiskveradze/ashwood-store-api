@@ -1,4 +1,5 @@
 import {
+  Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
@@ -17,6 +18,9 @@ export class Cart {
 
   @ManyToOne(() => Product, (product) => product.cartedBy)
   product: Product;
+
+  @Column({ default: 1 })
+  quantity: number;
 
   @CreateDateColumn()
   createdAt: Date;
