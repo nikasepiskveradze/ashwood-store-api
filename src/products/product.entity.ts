@@ -9,6 +9,7 @@ import {
 import { Category } from '../categories/category.entity';
 import { Favorite } from '../favorites/favorite.entity';
 import { Cart } from '../cart/cart.entity';
+import { Order } from '../orders/order.entity';
 
 @Entity()
 export class Product {
@@ -42,4 +43,7 @@ export class Product {
 
   @OneToMany(() => Cart, (cart) => cart.product)
   cartedBy: Cart[];
+
+  @OneToMany(() => Order, (order) => order.product)
+  orders: Order[];
 }
